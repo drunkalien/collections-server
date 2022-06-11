@@ -1,4 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
+import bcrypt from "bcryptjs";
+
+type RoleType = "Admin" | "User";
 
 export interface IUser extends Document {
   username: string;
@@ -6,7 +9,7 @@ export interface IUser extends Document {
   avatar: string;
   password: string;
   collections: Schema.Types.ObjectId[];
-  role: string;
+  role: RoleType;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -33,7 +36,7 @@ const UserSchema = new Schema<IUser>(
     collections: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Collceion",
+        ref: "Collection",
         default: [],
       },
     ],
@@ -44,6 +47,16 @@ const UserSchema = new Schema<IUser>(
   },
   { timestamps: true }
 );
+
+UserSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    const hash = await bcrypt.hash(this.password, 12);
+    this.password = hash;
+
+    next();
+  }
+  next();
+});
 
 const User = mongoose.model<IUser>("User", UserSchema);
 
