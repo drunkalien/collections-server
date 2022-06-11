@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+
 import { UserRepo } from "../repo/userRepo";
 import User, { IUser } from "../../models/User";
 import Collection, { ICollection } from "../../models/Collection";
@@ -39,6 +41,12 @@ export class UserService implements UserRepo {
       const user = await User.findOne({ username });
 
       if (!user) {
+        throw new AppError(404, "Invalid username or password");
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
         throw new AppError(404, "Invalid username or password");
       }
 
