@@ -23,6 +23,7 @@ const CollectionSchema = new mongoose.Schema<ICollection>({
   image: String,
   customFields: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "CustomFields",
   },
   comments: [
     {

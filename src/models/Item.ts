@@ -24,6 +24,7 @@ const ItemSchema = new mongoose.Schema<IItem>({
   },
   customFields: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "CustomFields",
   },
 });
 
