@@ -1,9 +1,12 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import { UserRepo } from "../repo/userRepo";
 import User, { IUser } from "../../models/User";
 import Collection, { ICollection } from "../../models/Collection";
 import AppError from "../../utils/AppError";
+import config from "../../config/config";
+import AuthResponseType from "../../types/AuthResponseType";
 
 export class UserService implements UserRepo {
   async findOne(username: string): Promise<IUser> {
@@ -20,11 +23,13 @@ export class UserService implements UserRepo {
     }
   }
 
-  async create(payload: IUser): Promise<IUser> {
+  async create(payload: IUser): Promise<AuthResponseType> {
     try {
       const user = await User.create(payload);
 
-      return user;
+      const token = await jwt.sign({ id: user?.id }, config.JwtSecret);
+
+      return { user, token };
     } catch (error) {
       throw error;
     }
@@ -36,9 +41,11 @@ export class UserService implements UserRepo {
   }: {
     username: string;
     password: string;
-  }): Promise<IUser> {
+  }): Promise<AuthResponseType> {
     try {
       const user = await User.findOne({ username });
+
+      const token = await jwt.sign({ id: user?.id }, config.JwtSecret);
 
       if (!user) {
         throw new AppError(404, "Invalid username or password");
@@ -50,7 +57,7 @@ export class UserService implements UserRepo {
         throw new AppError(404, "Invalid username or password");
       }
 
-      return user;
+      return { user, token };
     } catch (error) {
       throw error;
     }
