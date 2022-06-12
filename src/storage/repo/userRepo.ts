@@ -9,5 +9,6 @@ export interface UserRepo {
     username: string;
     password: string;
   }): Promise<AuthResponseType>;
+  delete(userId: string): Promise<void>;
   getUserCollections(userId: string): Promise<ICollection[]>;
 }

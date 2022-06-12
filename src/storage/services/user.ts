@@ -63,6 +63,14 @@ export class UserService implements UserRepo {
     }
   }
 
+  async delete(userId: string): Promise<void> {
+    try {
+      await User.findByIdAndDelete(userId);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getUserCollections(userId: string): Promise<ICollection[]> {
     try {
       const collections = Collection.find({ author: userId });
