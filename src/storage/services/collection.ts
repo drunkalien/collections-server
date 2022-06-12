@@ -41,6 +41,14 @@ export class CollectionService implements CollectionRepo {
     }
   }
 
+  async delete(id: string): Promise<void> {
+    try {
+      await Collection.findByIdAndDelete(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getUserCollections(userId: string): Promise<ICollection[]> {
     try {
       const collections = Collection.find({ author: userId });
