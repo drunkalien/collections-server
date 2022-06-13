@@ -7,12 +7,12 @@ db.on("error", () => {
   console.log("Connection Error");
 });
 
-db.once("connection", () => {
+db.once("open", () => {
   console.log("DB connection successful");
 });
 
 export default class Database {
-  private url = `mongodb://localhost:/${config.MongoPort}/${config.MongoDatabase}`;
+  private url = `mongodb://localhost:${config.MongoPort}/${config.MongoDatabase}`;
 
   connect() {
     return mongoose.connect(this.url, {}, (error) => {
