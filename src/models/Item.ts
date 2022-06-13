@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface IItem extends Document {
+export interface IItem extends Document {
   name: string;
   tags: string[];
   numberOfLikes: number;
