@@ -2,13 +2,7 @@ import { UserService } from "./services/user";
 import { CollectionService } from "./services/collection";
 import { CommentService } from "./services/comment";
 import { ItemService } from "./services/item";
-
-type ServiceType = {
-  user: UserService;
-  collection: CollectionService;
-  comment: CommentService;
-  item: ItemService;
-};
+import ServiceType from "../types/ServiceType";
 
 export const service: ServiceType = {
   user: new UserService(),
