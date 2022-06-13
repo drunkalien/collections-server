@@ -2,6 +2,7 @@ import mongoose, { Document } from "mongoose";
 
 export interface ICollection extends Document {
   name: string;
+  description: string;
   tags: string[];
   author: mongoose.Schema.Types.ObjectId;
   image: string;
@@ -13,6 +14,7 @@ const CollectionSchema = new mongoose.Schema<ICollection>({
     type: String,
     required: true,
   },
+  description: String,
   tags: [],
   author: {
     type: mongoose.Schema.Types.ObjectId,
