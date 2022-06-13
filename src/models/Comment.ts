@@ -17,6 +17,7 @@ const CommentSchema = new mongoose.Schema<IComment>(
     },
     commentedTo: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Item",
     },
     body: {
       type: String,
