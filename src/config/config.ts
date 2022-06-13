@@ -18,7 +18,7 @@ const config: Config = {
 
 function getConf(name: string, def: string): string {
   if (process.env[name]) {
-    process.env[name] || "";
+    return process.env[name] || "";
   }
 
   return def;
