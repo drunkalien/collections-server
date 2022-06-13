@@ -5,7 +5,6 @@ export interface ICollection extends Document {
   tags: string[];
   author: mongoose.Schema.Types.ObjectId;
   image: string;
-  comments: mongoose.Schema.Types.ObjectId[];
   customFields: mongoose.Schema.Types.ObjectId;
 }
 
@@ -25,12 +24,6 @@ const CollectionSchema = new mongoose.Schema<ICollection>({
     type: mongoose.Schema.Types.ObjectId,
     ref: "CustomFields",
   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
 });
 
 const Collection = mongoose.model<ICollection>("Collection", CollectionSchema);
