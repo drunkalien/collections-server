@@ -7,6 +7,6 @@ import config from "./config/config";
   db.connect();
 
   app.listen(config.HttpPort, () => {
-    `app is running on port ${config.HttpPort}`;
+    console.log(`app is running on port ${config.HttpPort}`);
   });
 })();
