@@ -43,6 +43,7 @@ const UserSchema = new Schema<IUser>(
     role: {
       type: String,
       required: true,
+      default: "User",
     },
   },
   { timestamps: true }
