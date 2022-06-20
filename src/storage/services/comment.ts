@@ -45,6 +45,11 @@ export class CommentService implements CommentRepo {
         role === "Admin"
       ) {
         comment = await Comment.findByIdAndUpdate(id, { payload });
+      } else {
+        throw new AppError(
+          403,
+          "You have no permission to alter the comments!"
+        );
       }
 
       if (!commentToUpdate) {
