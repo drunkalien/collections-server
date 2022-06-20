@@ -2,14 +2,13 @@ import { CollectionRepo } from "../repo/collectionRepo";
 import Collection, { ICollection } from "../../models/Collection";
 import AppError from "../../utils/AppError";
 import { canAlter } from "../../utils/canAlter";
-import { Types } from "mongoose";
 
 export class CollectionService implements CollectionRepo {
   async create(payload: object): Promise<ICollection> {
     try {
       const collection = await Collection.create(payload);
 
-      return collection;
+      return collection.toObject();
     } catch (error) {
       throw error;
     }
@@ -39,7 +38,7 @@ export class CollectionService implements CollectionRepo {
 
   async getCollection(id: string): Promise<ICollection | null> {
     try {
-      const collection = Collection.findById(id);
+      const collection = await Collection.findById(id);
 
       if (!collection) {
         throw new AppError(404, "Collection not found");

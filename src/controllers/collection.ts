@@ -5,6 +5,8 @@ export class CollectionController {
   async create(req: Request, res: Response) {
     const { collection } = await service.collection.create(req.body);
 
+    console.log("BEFORE RESPONSE", collection);
+
     res.status(201).json({
       success: true,
       collection,

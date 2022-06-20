@@ -39,7 +39,7 @@ export class ItemService implements ItemRepo {
 
       const item = await Item.create(payload);
 
-      return item;
+      return item.toObject();
     } catch (error) {
       throw error;
     }
