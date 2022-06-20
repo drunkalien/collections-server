@@ -4,6 +4,7 @@ import collectionRouter from "./routes/collection";
 import itemRouter from "./routes/item";
 
 const app = express();
+const BASE = "/api/v1";
 
 app.use(
   cors({
@@ -13,7 +14,7 @@ app.use(
 
 app.use(express.json());
 
-app.use("/api/v1/collections", collectionRouter);
-app.use("/api/v1/items", itemRouter);
+app.use(`${BASE}/collections`, collectionRouter);
+app.use(`${BASE}/items`, itemRouter);
 
 export default app;
