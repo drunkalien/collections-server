@@ -80,7 +80,7 @@ export class CollectionController {
 
       res.status(200).json({
         success: true,
-        ...items,
+        items,
       });
     } catch (error) {
       res.json({
