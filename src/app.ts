@@ -17,6 +17,6 @@ app.use(express.json());
 
 app.use(`${BASE}/collections`, collectionRouter);
 app.use(`${BASE}/items`, itemRouter);
-app.use(`${BASE}/users`, itemRouter);
+app.use(`${BASE}/users`, userRouter);
 
 export default app;
