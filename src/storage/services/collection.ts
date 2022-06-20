@@ -1,5 +1,6 @@
 import { CollectionRepo } from "../repo/collectionRepo";
 import Collection, { ICollection } from "../../models/Collection";
+import Item, { IItem } from "../../models/Item";
 import AppError from "../../utils/AppError";
 import { canAlter } from "../../utils/canAlter";
 
@@ -65,11 +66,11 @@ export class CollectionService implements CollectionRepo {
     }
   }
 
-  async getUserCollections(userId: string): Promise<ICollection[]> {
+  async getCollectionItems(collectionId: string): Promise<IItem[]> {
     try {
-      const collections = Collection.find({ author: userId });
+      const items = await Item.find({ collection: collectionId });
 
-      return collections;
+      return items;
     } catch (error) {
       throw error;
     }
