@@ -3,6 +3,7 @@ import Item, { IItem } from "../../models/Item";
 import { ItemRepo } from "../repo/itemRepo";
 import { service } from "../main";
 import { canAlter } from "../../utils/canAlter";
+import { Schema, Types } from "mongoose";
 
 export class ItemService implements ItemRepo {
   async get(id: string): Promise<IItem> {
@@ -90,6 +91,28 @@ export class ItemService implements ItemRepo {
 
       if (item && collection && canAlter(userId, collection)) {
         await Item.findByIdAndDelete(id);
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async likeUnlike(userId: Schema.Types.ObjectId, id: string): Promise<void> {
+    try {
+      const item = await this.get(id);
+
+      if (!item) {
+        throw new AppError(404, "Item not found!");
+      }
+
+      if (!item.likedBy.includes(userId)) {
+        item.likedBy.push(userId);
+        item.numberOfLikes++;
+        await item.save();
+      } else {
+        item.likedBy = item.likedBy.filter((i) => i !== userId);
+        item.numberOfLikes--;
+        await item.save();
       }
     } catch (error) {
       throw error;

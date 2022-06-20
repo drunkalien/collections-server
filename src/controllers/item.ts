@@ -76,4 +76,19 @@ export class ItemController {
       });
     }
   }
+
+  async likeUnlike(req: Request, res: Response) {
+    try {
+      const { userId } = req.query;
+      await service.item.likeUnlike(userId as any, req.params.id);
+
+      res.status(200).json({
+        success: true,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+      });
+    }
+  }
 }
