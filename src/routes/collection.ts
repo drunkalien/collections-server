@@ -12,5 +12,6 @@ router
   .patch(controller.update)
   .get(controller.getCollection)
   .delete(controller.deleteCollection);
+router.route("/:id/items").get(controller.getCollectionItems);
 
 export default router;

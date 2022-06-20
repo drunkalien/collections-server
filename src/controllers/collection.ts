@@ -73,4 +73,20 @@ export class CollectionController {
       });
     }
   }
+
+  async getCollectionItems(req: Request, res: Response) {
+    try {
+      const items = await service.collection.getCollectionItems(req.params.id);
+
+      res.status(200).json({
+        success: true,
+        ...items,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
 }
