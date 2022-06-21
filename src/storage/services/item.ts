@@ -110,8 +110,15 @@ export class ItemService implements ItemRepo {
         item.numberOfLikes++;
         await item.save();
       } else {
-        item.likedBy = item.likedBy.filter((i) => i !== userId);
         item.numberOfLikes--;
+        await Item.findOneAndUpdate(
+          { _id: id },
+          {
+            $pull: {
+              likedBy: userId,
+            },
+          }
+        ).exec();
         await item.save();
       }
     } catch (error) {
