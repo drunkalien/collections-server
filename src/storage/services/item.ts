@@ -4,6 +4,7 @@ import { ItemRepo } from "../repo/itemRepo";
 import { service } from "../main";
 import { canAlter } from "../../utils/canAlter";
 import { Schema, Types } from "mongoose";
+import Comment, { IComment } from "../../models/Comment";
 
 export class ItemService implements ItemRepo {
   async get(id: string): Promise<IItem> {
@@ -121,6 +122,16 @@ export class ItemService implements ItemRepo {
         );
         await item.save();
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getItemCommetns(id: string): Promise<IComment[]> {
+    try {
+      const comments = await Comment.find({ commentedTo: id });
+
+      return comments;
     } catch (error) {
       throw error;
     }
