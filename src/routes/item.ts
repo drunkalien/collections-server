@@ -13,5 +13,6 @@ router
   .get(controller.get)
   .delete(controller.delete);
 router.route("/like-unlike/:id").post(controller.likeUnlike);
+router.route("/:id/comments").get(controller.getItemComments);
 
 export default router;
