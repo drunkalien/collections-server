@@ -118,7 +118,7 @@ export class ItemService implements ItemRepo {
               likedBy: userId,
             },
           }
-        ).exec();
+        );
         await item.save();
       }
     } catch (error) {
