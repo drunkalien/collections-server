@@ -91,4 +91,19 @@ export class ItemController {
       });
     }
   }
+
+  async getItemComments(req: Request, res: Response) {
+    try {
+      const comments = await service.item.getItemCommetns(req.params.id);
+      res.status(200).json({
+        success: true,
+        comments,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
 }
