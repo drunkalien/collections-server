@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { service } from "../storage/main";
+import { buffTo64 } from "../utils/buffTo64";
+import { cloudinaryUpload } from "../utils/cloudinaryUpload";
 
 export class UserController {
   async findOne(req: Request, res: Response) {
@@ -21,7 +23,14 @@ export class UserController {
 
   async create(req: Request, res: Response) {
     try {
-      const user = await service.user.create(req.body);
+      let file64;
+      let avatar = "";
+      if (req.file) {
+        file64 = buffTo64(req.file);
+        const uploadResult = await cloudinaryUpload(file64);
+        avatar = uploadResult.url;
+      }
+      const user = await service.user.create({ ...req.body, avatar });
 
       res.status(201).json({
         success: true,
