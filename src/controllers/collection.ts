@@ -35,13 +35,27 @@ export class CollectionController {
   async update(req: Request, res: Response) {
     try {
       const { userId, role } = req.query;
-
-      const collection = await service.collection.update(
-        userId?.toString()!,
-        role?.toString()! as RoleType,
-        req.params.id,
-        req.body
-      );
+      let file64;
+      let image = "";
+      let collection;
+      if (req.file) {
+        file64 = buffTo64(req.file);
+        const uploadResult = await cloudinaryUpload(file64);
+        image = uploadResult.url;
+        collection = await service.collection.update(
+          userId?.toString()!,
+          role?.toString()! as RoleType,
+          req.params.id,
+          { ...req.body, image }
+        );
+      } else {
+        collection = await service.collection.update(
+          userId?.toString()!,
+          role?.toString()! as RoleType,
+          req.params.id,
+          { ...req.body }
+        );
+      }
 
       res.status(200).json({
         success: true,
