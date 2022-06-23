@@ -1,16 +1,27 @@
 import { Request, Response } from "express";
 import { service } from "../storage/main";
+import { buffTo64 } from "../utils/buffTo64";
+import { cloudinaryUpload } from "../utils/cloudinaryUpload";
 
 export class CollectionController {
   async create(req: Request, res: Response) {
-    const { collection } = await service.collection.create(req.body);
-
-    console.log("BEFORE RESPONSE", collection);
+    let file64;
+    let image = "";
+    if (req.file) {
+      file64 = buffTo64(req.file);
+      const uploadResult = await cloudinaryUpload(file64);
+      image = uploadResult.url;
+    }
+    const { collection } = await service.collection.create({
+      ...req.body,
+      image,
+    });
 
     res.status(201).json({
       success: true,
       collection,
     });
+
     try {
     } catch (error) {
       res.json({
