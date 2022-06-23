@@ -1,12 +1,12 @@
 import { Router } from "express";
 
 import { CollectionController } from "../controllers/collection";
+import { singleUploadCtrl } from "../middlewares/multer";
 
 const controller = new CollectionController();
-
 const router = Router();
 
-router.route("/").post(controller.create);
+router.route("/").post(singleUploadCtrl, controller.create);
 router
   .route("/:id")
   .patch(controller.update)
