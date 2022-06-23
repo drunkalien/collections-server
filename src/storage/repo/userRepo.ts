@@ -4,6 +4,7 @@ import AuthResponseType from "../../types/AuthResponseType";
 
 export interface UserRepo {
   findOne(username: string): Promise<IUser>;
+  findById(id: string): Promise<IUser>;
   create(payload: IUser): Promise<AuthResponseType>;
   signIn(payload: {
     username: string;

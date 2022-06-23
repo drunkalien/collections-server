@@ -23,6 +23,20 @@ export class UserService implements UserRepo {
     }
   }
 
+  async findById(id: string): Promise<IUser> {
+    try {
+      const user = await User.findById(id);
+
+      if (!user) {
+        throw new AppError(404, "User not found!");
+      }
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async create(payload: IUser): Promise<AuthResponseType> {
     try {
       const user = await User.create(payload);
