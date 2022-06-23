@@ -45,7 +45,7 @@ export class CollectionService implements CollectionRepo {
         throw new AppError(404, "Collection not found");
       }
 
-      return collection;
+      return collection.toObject();
     } catch (error) {
       throw error;
     }
