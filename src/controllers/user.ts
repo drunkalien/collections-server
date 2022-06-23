@@ -44,6 +44,35 @@ export class UserController {
     }
   }
 
+  async update(req: Request, res: Response) {
+    try {
+      let file64;
+      let avatar = "";
+      let user;
+      if (req.file) {
+        file64 = buffTo64(req.file);
+        const uploadResult = await cloudinaryUpload(file64);
+        avatar = uploadResult.url;
+        user = await service.user.update(req.params.id, {
+          ...req.body,
+          avatar,
+        });
+      } else {
+        user = await service.user.update(req.params.id, req.body);
+      }
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
+
   async signIn(req: Request, res: Response) {
     try {
       const user = await service.user.signIn(req.body);

@@ -6,6 +6,7 @@ export interface UserRepo {
   findOne(username: string): Promise<IUser>;
   findById(id: string): Promise<IUser>;
   create(payload: IUser): Promise<AuthResponseType>;
+  update(id: string, payload: object): Promise<IUser>;
   signIn(payload: {
     username: string;
     password: string;
