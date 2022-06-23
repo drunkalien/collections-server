@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { RoleType } from "../models/User";
 
 import { service } from "../storage/main";
 
@@ -42,9 +43,10 @@ export class ItemController {
 
   async update(req: Request, res: Response) {
     try {
-      const { collectionId, userId } = req.query;
+      const { collectionId, userId, role } = req.query;
       const item = await service.item.update(
         userId?.toString()!,
+        role?.toString()! as RoleType,
         collectionId?.toString()!,
         req.body
       );
@@ -63,8 +65,12 @@ export class ItemController {
 
   async delete(req: Request, res: Response) {
     try {
-      const { userId } = req.query;
-      await service.item.delete(userId?.toString()!, req.body);
+      const { userId, role } = req.query;
+      await service.item.delete(
+        userId?.toString()!,
+        role?.toString()! as RoleType,
+        req.body
+      );
 
       res.status(200).json({
         success: true,

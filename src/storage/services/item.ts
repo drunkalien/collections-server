@@ -3,8 +3,9 @@ import Item, { IItem } from "../../models/Item";
 import { ItemRepo } from "../repo/itemRepo";
 import { service } from "../main";
 import { canAlter } from "../../utils/canAlter";
-import { Schema, Types } from "mongoose";
+import { Schema } from "mongoose";
 import Comment, { IComment } from "../../models/Comment";
+import { RoleType } from "../../models/User";
 
 export class ItemService implements ItemRepo {
   async get(id: string): Promise<IItem> {
@@ -47,7 +48,12 @@ export class ItemService implements ItemRepo {
     }
   }
 
-  async update(userId: string, id: string, payload: object): Promise<IItem> {
+  async update(
+    userId: string,
+    role: RoleType,
+    id: string,
+    payload: object
+  ): Promise<IItem> {
     try {
       let item: IItem | null = await this.get(id);
       let collection;
@@ -62,7 +68,10 @@ export class ItemService implements ItemRepo {
         throw new AppError(404, "Collection not found!");
       }
 
-      if (item && collection && canAlter(userId, collection)) {
+      if (
+        (item && collection && canAlter(userId, collection)) ||
+        role === "Admin"
+      ) {
         item = await Item.findByIdAndUpdate(id, payload);
       }
 
@@ -76,7 +85,7 @@ export class ItemService implements ItemRepo {
     }
   }
 
-  async delete(userId: string, id: string): Promise<void> {
+  async delete(userId: string, role: RoleType, id: string): Promise<void> {
     try {
       const item = await this.get(id);
       let collection;
@@ -90,7 +99,10 @@ export class ItemService implements ItemRepo {
       if (!item) throw new AppError(404, "Item not found!");
       if (!collection) throw new AppError(404, "Collection not found!");
 
-      if (item && collection && canAlter(userId, collection)) {
+      if (
+        (item && collection && canAlter(userId, collection)) ||
+        role === "Admin"
+      ) {
         await Item.findByIdAndDelete(id);
       }
     } catch (error) {
