@@ -44,7 +44,7 @@ export class CommentService implements CommentRepo {
           userId.toString() === commentToUpdate.author.toString()) ||
         role === "Admin"
       ) {
-        comment = await Comment.findByIdAndUpdate(id, { payload });
+        comment = await Comment.findByIdAndUpdate(id, payload, { new: true });
       } else {
         throw new AppError(
           403,

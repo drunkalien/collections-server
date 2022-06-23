@@ -72,7 +72,7 @@ export class ItemService implements ItemRepo {
         (item && collection && canAlter(userId, collection)) ||
         role === "Admin"
       ) {
-        item = await Item.findByIdAndUpdate(id, payload);
+        item = await Item.findByIdAndUpdate(id, payload, { new: true });
       }
 
       if (!item) {

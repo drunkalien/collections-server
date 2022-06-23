@@ -26,7 +26,9 @@ export class CollectionService implements CollectionRepo {
       let collection = await this.getCollection(collectionId);
 
       if ((collection && canAlter(userId, collection)) || role === "Admin") {
-        collection = await Collection.findByIdAndUpdate(collectionId, payload);
+        collection = await Collection.findByIdAndUpdate(collectionId, payload, {
+          new: true,
+        });
       }
 
       if (!collection) {
