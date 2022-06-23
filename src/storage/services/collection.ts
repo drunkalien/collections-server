@@ -3,6 +3,7 @@ import Collection, { ICollection } from "../../models/Collection";
 import Item, { IItem } from "../../models/Item";
 import AppError from "../../utils/AppError";
 import { canAlter } from "../../utils/canAlter";
+import { RoleType } from "../../models/User";
 
 export class CollectionService implements CollectionRepo {
   async create(payload: object): Promise<ICollection> {
@@ -17,13 +18,14 @@ export class CollectionService implements CollectionRepo {
 
   async update(
     userId: string,
+    role: RoleType,
     collectionId: string,
     payload: object
   ): Promise<ICollection> {
     try {
       let collection = await this.getCollection(collectionId);
 
-      if (collection && canAlter(userId, collection)) {
+      if ((collection && canAlter(userId, collection)) || role === "Admin") {
         collection = await Collection.findByIdAndUpdate(collectionId, payload);
       }
 
@@ -51,14 +53,18 @@ export class CollectionService implements CollectionRepo {
     }
   }
 
-  async delete(userId: string, collectionId: string): Promise<void> {
+  async delete(
+    userId: string,
+    role: RoleType,
+    collectionId: string
+  ): Promise<void> {
     try {
       const collection = await this.getCollection(collectionId);
       if (!collection) {
         throw new AppError(404, "Collection not found");
       }
 
-      if (collection && canAlter(userId, collection)) {
+      if ((collection && canAlter(userId, collection)) || role === "Admin") {
         await Collection.findByIdAndDelete();
       }
     } catch (error) {

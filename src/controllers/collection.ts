@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { RoleType } from "../models/User";
 import { service } from "../storage/main";
 import { buffTo64 } from "../utils/buffTo64";
 import { cloudinaryUpload } from "../utils/cloudinaryUpload";
@@ -33,10 +34,11 @@ export class CollectionController {
 
   async update(req: Request, res: Response) {
     try {
-      const { userId } = req.query;
+      const { userId, role } = req.query;
 
       const collection = await service.collection.update(
         userId?.toString()!,
+        role?.toString()! as RoleType,
         req.params.id,
         req.body
       );
@@ -71,8 +73,12 @@ export class CollectionController {
 
   async deleteCollection(req: Request, res: Response) {
     try {
-      const { userId } = req.query;
-      await service.collection.delete(userId?.toString()!, req.params.id);
+      const { userId, role } = req.query;
+      await service.collection.delete(
+        userId?.toString()!,
+        role?.toString()! as RoleType,
+        req.params.id
+      );
 
       res.status(200).json({
         success: true,
