@@ -24,6 +24,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(`${BASE}/collections`, collectionRouter);
 app.use(`${BASE}/items`, itemRouter);
