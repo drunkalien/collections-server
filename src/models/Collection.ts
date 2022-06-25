@@ -28,6 +28,8 @@ const CollectionSchema = new mongoose.Schema<ICollection>({
   },
 });
 
+CollectionSchema.index({ "$**": "text" });
+
 const Collection = mongoose.model<ICollection>("Collection", CollectionSchema);
 
 export default Collection;

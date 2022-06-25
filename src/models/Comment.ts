@@ -27,6 +27,8 @@ const CommentSchema = new mongoose.Schema<IComment>(
   { timestamps: true }
 );
 
+CommentSchema.index({ "$**": "text" });
+
 const Comment = mongoose.model<IComment>("Comment", CommentSchema);
 
 export default Comment;

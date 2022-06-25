@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import collectionRouter from "./routes/collection";
 import itemRouter from "./routes/item";
 import userRouter from "./routes/user";
+import searchRouter from "./routes/search";
 
 const cloudinary = require("cloudinary");
 
@@ -27,5 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(`${BASE}/collections`, collectionRouter);
 app.use(`${BASE}/items`, itemRouter);
 app.use(`${BASE}/users`, userRouter);
+app.use(`${BASE}/`, searchRouter);
 
 export default app;

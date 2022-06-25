@@ -40,6 +40,8 @@ const ItemSchema = new mongoose.Schema<IItem>({
   },
 });
 
+ItemSchema.index({ "$**": "text" });
+
 const Item = mongoose.model("Item", ItemSchema);
 
 export default Item;
