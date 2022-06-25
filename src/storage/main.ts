@@ -3,6 +3,7 @@ import { CollectionService } from "./services/collection";
 import { CommentService } from "./services/comment";
 import { ItemService } from "./services/item";
 import { SearchService } from "./services/search";
+import { AdminService } from "./services/admin";
 import ServiceType from "../types/ServiceType";
 
 export const service: ServiceType = {
@@ -11,4 +12,5 @@ export const service: ServiceType = {
   comment: new CommentService(),
   item: new ItemService(),
   search: new SearchService(),
+  admin: new AdminService(),
 };

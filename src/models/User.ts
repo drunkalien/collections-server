@@ -9,6 +9,7 @@ export interface IUser extends Document {
   avatar: string;
   password: string;
   collections: Schema.Types.ObjectId[];
+  isBlocked: boolean;
   role: RoleType;
   createdAt: Date;
   updatedAt: Date;
@@ -44,6 +45,11 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: true,
       default: "User",
+    },
+    isBlocked: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   { timestamps: true }

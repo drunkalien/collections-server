@@ -5,6 +5,7 @@ import collectionRouter from "./routes/collection";
 import itemRouter from "./routes/item";
 import userRouter from "./routes/user";
 import searchRouter from "./routes/search";
+import adminRouter from "./routes/admin";
 
 const cloudinary = require("cloudinary");
 
@@ -30,5 +31,6 @@ app.use(`${BASE}/collections`, collectionRouter);
 app.use(`${BASE}/items`, itemRouter);
 app.use(`${BASE}/users`, userRouter);
 app.use(`${BASE}/`, searchRouter);
+app.use(`${BASE}/admins`, adminRouter);
 
 export default app;
