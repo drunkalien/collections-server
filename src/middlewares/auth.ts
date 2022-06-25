@@ -21,6 +21,10 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
   const decoded: any = jwt.verify(token, "secret");
   const user = await service.user.findById(decoded.id);
 
+  if (user && user.isBlocked) {
+    throw new AppError(403, "Permission denied!");
+  }
+
   if (user) {
     next();
   }
