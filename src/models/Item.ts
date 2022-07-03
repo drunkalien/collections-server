@@ -34,10 +34,7 @@ const ItemSchema = new mongoose.Schema<IItem>({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  customFields: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "CustomFields",
-  },
+  customFields: [],
 });
 
 ItemSchema.index({ "$**": "text" });
