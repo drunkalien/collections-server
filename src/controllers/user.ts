@@ -124,7 +124,6 @@ export class UserController {
 
   async getCurrentUser(req: Request, res: Response) {
     try {
-      console.log(req.headers.authorization);
       let token = "";
       if (
         req.headers.authorization &&

@@ -14,13 +14,12 @@ type TCollection = {
   description: string;
   author: mongoose.Schema.Types.ObjectId;
   image?: string;
-  customFields: object[];
+  customFields: string;
 };
 
 export class CollectionService implements CollectionRepo {
   async create(payload: TCollection): Promise<ICollection> {
     try {
-      console.log(payload);
       let customFields;
 
       const collection = await Collection.create({
@@ -32,7 +31,7 @@ export class CollectionService implements CollectionRepo {
 
       if (payload.customFields) {
         customFields = await service.customFields.create({
-          customFields: payload.customFields,
+          customFields: JSON.parse(payload.customFields),
           parent: collection._id,
         });
       }
