@@ -1,14 +1,47 @@
+import mongoose from "mongoose";
+
 import { CollectionRepo } from "../repo/collectionRepo";
 import Collection, { ICollection } from "../../models/Collection";
 import Item, { IItem } from "../../models/Item";
 import AppError from "../../utils/AppError";
 import { canAlter } from "../../utils/canAlter";
 import { RoleType } from "../../models/User";
+import { service } from "../main";
+
+type TCollection = {
+  name: string;
+  tags?: string[];
+  description: string;
+  author: mongoose.Schema.Types.ObjectId;
+  image?: string;
+  customFields: object[];
+};
 
 export class CollectionService implements CollectionRepo {
-  async create(payload: object): Promise<ICollection> {
+  async create(payload: TCollection): Promise<ICollection> {
     try {
-      const collection = await Collection.create(payload);
+      console.log(payload);
+      let customFields;
+
+      const collection = await Collection.create({
+        name: payload.name,
+        description: payload.description,
+        author: payload.author,
+        image: payload.image ? payload.image : "",
+      });
+
+      if (payload.customFields) {
+        customFields = await service.customFields.create({
+          customFields: payload.customFields,
+          parent: collection._id,
+        });
+      }
+
+      if (customFields) {
+        collection.customFields = customFields._id;
+        await collection.save();
+      }
+      console.log(payload);
 
       return collection.toObject();
     } catch (error) {

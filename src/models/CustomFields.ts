@@ -1,12 +1,12 @@
 import mongoose, { Document } from "mongoose";
 
 export interface ICustomFields extends Document {
-  fields: object[];
+  customFields: object[];
   parent: mongoose.Schema.Types.ObjectId;
 }
 
 const CustomFieldsSchema = new mongoose.Schema<ICustomFields>({
-  fields: [],
+  customFields: [],
   parent: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Collection",
