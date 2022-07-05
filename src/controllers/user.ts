@@ -77,7 +77,7 @@ export class UserController {
     try {
       const user = await service.user.signIn(req.body);
 
-      res.status(201).json({
+      res.status(200).json({
         success: true,
         ...user,
       });
