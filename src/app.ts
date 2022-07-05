@@ -7,6 +7,7 @@ import userRouter from "./routes/user";
 import searchRouter from "./routes/search";
 import adminRouter from "./routes/admin";
 import customFieldsRouter from "./routes/customFields";
+import commentRouter from "./routes/comment";
 
 const cloudinary = require("cloudinary");
 
@@ -34,5 +35,6 @@ app.use(`${BASE}/users`, userRouter);
 app.use(`${BASE}/`, searchRouter);
 app.use(`${BASE}/admins`, adminRouter);
 app.use(`${BASE}/custom-fields`, customFieldsRouter);
+app.use(`${BASE}/comments`, commentRouter);
 
 export default app;

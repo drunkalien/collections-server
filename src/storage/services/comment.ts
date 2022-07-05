@@ -66,9 +66,22 @@ export class CommentService implements CommentRepo {
     }
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(
+    id: string,
+    userId: Types.ObjectId,
+    role: RoleType
+  ): Promise<void> {
     try {
-      await Comment.findByIdAndDelete(id);
+      const comment = await Comment.findById(id);
+      if (!comment) {
+        throw new AppError(404, "Comment not found");
+      }
+
+      if (comment.author.toString() === userId.toString() || role === "Admin") {
+        await Comment.findByIdAndDelete(id);
+      } else {
+        throw new AppError(403, "You cannot delete this comment");
+      }
     } catch (error) {
       throw error;
     }

@@ -10,6 +10,6 @@ export interface CommentRepo {
     role: RoleType,
     payload: object
   ): Promise<IComment>;
-  delete(id: string): Promise<void>;
+  delete(id: string, userId: Types.ObjectId, role: RoleType): Promise<void>;
   get(id: string): Promise<IComment>;
 }
