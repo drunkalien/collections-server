@@ -15,14 +15,23 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
   }
 
   if (!token) {
-    throw new AppError(401, "Unauthorized!");
+    const error = new AppError(401, "Unauthorized!");
+    res.status(401).json({
+      success: false,
+      error,
+    });
   }
 
   const decoded: any = jwt.verify(token, "secret");
   const user = await service.user.findById(decoded.id);
 
   if (user && user.isBlocked) {
-    throw new AppError(403, "Permission denied!");
+    const error = new AppError(403, "Permission denied!");
+
+    res.status(403).json({
+      success: false,
+      error,
+    });
   }
 
   if (user) {
