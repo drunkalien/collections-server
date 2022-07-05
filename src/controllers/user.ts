@@ -124,6 +124,7 @@ export class UserController {
 
   async getCurrentUser(req: Request, res: Response) {
     try {
+      console.log(req.headers.authorization);
       let token = "";
       if (
         req.headers.authorization &&
@@ -134,6 +135,7 @@ export class UserController {
 
       const decoded: any = jwt.verify(token, "secret");
       const user = await service.user.findById(decoded.id);
+
       res.status(200).json({
         success: true,
         user,
