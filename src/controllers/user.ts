@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+
 import { service } from "../storage/main";
 import { buffTo64 } from "../utils/buffTo64";
 import { cloudinaryUpload } from "../utils/cloudinaryUpload";
@@ -111,6 +113,30 @@ export class UserController {
       res.status(201).json({
         success: true,
         collections,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
+
+  async getCurrentUser(req: Request, res: Response) {
+    try {
+      let token = "";
+      if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer")
+      ) {
+        token = req.headers.authorization.split(" ")[1];
+      }
+
+      const decoded: any = jwt.verify(token, "secret");
+      const user = await service.user.findById(decoded.id);
+      res.status(200).json({
+        success: true,
+        user,
       });
     } catch (error) {
       res.json({
