@@ -14,6 +14,6 @@ router
   .get(controller.findOne)
   .delete(auth, controller.delete);
 router.route("/:id/collections").get(controller.getUserCollections);
-router.route("/current/user").get(controller.getCurrentUser);
+router.route("/me").get(controller.getCurrentUser);
 
 export default router;
