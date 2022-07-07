@@ -7,6 +7,6 @@ const router = Router();
 const controller = new CustomFieldsController();
 
 router.route("/create").post(auth, controller.create);
-router.route("/:id").get(auth, controller.create);
+router.route("/:id").get(auth, controller.getCollectionFields);
 
 export default router;

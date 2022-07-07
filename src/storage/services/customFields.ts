@@ -28,7 +28,7 @@ export class CustomFieldsService implements CustomFieldsRepo {
         throw new AppError(404, "Not found");
       }
 
-      return customFields;
+      return customFields.toObject();
     } catch (error) {
       throw error;
     }
