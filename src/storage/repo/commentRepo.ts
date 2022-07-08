@@ -3,7 +3,11 @@ import { RoleType } from "../../models/User";
 import { Types } from "mongoose";
 
 export interface CommentRepo {
-  create(payload: IComment): Promise<IComment>;
+  create(
+    item: Types.ObjectId,
+    author: Types.ObjectId,
+    payload: IComment
+  ): Promise<IComment>;
   update(
     id: string,
     userId: Types.ObjectId,

@@ -5,9 +5,17 @@ import { CommentRepo } from "../repo/commentRepo";
 import { Types } from "mongoose";
 
 export class CommentService implements CommentRepo {
-  async create(payload: IComment): Promise<IComment> {
+  async create(
+    item: Types.ObjectId,
+    author: Types.ObjectId,
+    payload: IComment
+  ): Promise<IComment> {
     try {
-      const comment = await Comment.create(payload);
+      const comment = await Comment.create({
+        author,
+        commentedTo: item,
+        body: payload.body,
+      });
 
       return comment;
     } catch (error) {

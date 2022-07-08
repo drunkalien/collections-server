@@ -5,7 +5,12 @@ import { RoleType } from "../models/User";
 export class CommentController {
   async create(req: Request, res: Response) {
     try {
-      const comment = await service.comment.create(req.body);
+      const { itemId, userId } = req.query;
+      const comment = await service.comment.create(
+        itemId?.toString() as any,
+        userId?.toString() as any,
+        req.body
+      );
 
       res.status(201).json({
         success: true,
