@@ -33,14 +33,17 @@ export class ItemService implements ItemRepo {
         throw new AppError(404, "Collection not found!");
       }
 
-      if (!canAlter(userId, collection)) {
+      if (userId !== collection.author.toString()) {
         throw new AppError(
           403,
           "Permission denied for altering the collection!"
         );
       }
 
-      const item = await Item.create(payload);
+      const item = await Item.create({
+        ...payload,
+        itemCollection: collectionId,
+      });
 
       return item.toObject();
     } catch (error) {
