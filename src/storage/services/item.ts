@@ -15,7 +15,7 @@ export class ItemService implements ItemRepo {
         throw new AppError(404, "Item not found");
       }
 
-      return item;
+      return item.toObject();
     } catch (error) {
       throw error;
     }
