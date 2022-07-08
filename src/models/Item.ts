@@ -6,7 +6,7 @@ export interface IItem extends Document {
   numberOfLikes: number;
   likedBy: mongoose.Schema.Types.ObjectId[];
   itemCollection: mongoose.Schema.Types.ObjectId;
-  customFields: mongoose.Schema.Types.ObjectId;
+  customFields: [];
 }
 
 const ItemSchema = new mongoose.Schema<IItem>({
