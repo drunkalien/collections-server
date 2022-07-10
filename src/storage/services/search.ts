@@ -20,7 +20,12 @@ export class SearchService implements SearchRepo {
         $text: { $search: query },
       });
 
-      return [...collections, ...users, ...comments, ...items];
+      return [
+        { ...collections, type: "collection" },
+        { ...users, type: "user" },
+        { ...comments, type: "comment" },
+        { ...items, type: "item" },
+      ];
     } catch (error) {
       throw error;
     }
