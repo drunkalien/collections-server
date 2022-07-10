@@ -86,14 +86,17 @@ export class ItemController {
   async likeUnlike(req: Request, res: Response) {
     try {
       const { userId } = req.query;
+      console.log(userId, req.params.id);
       await service.item.likeUnlike(userId as any, req.params.id);
 
       res.status(200).json({
         success: true,
       });
     } catch (error) {
+      console.log(error);
       res.json({
         success: false,
+        error,
       });
     }
   }
