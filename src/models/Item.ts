@@ -7,6 +7,7 @@ export interface IItem extends Document {
   likedBy: string[];
   itemCollection: mongoose.Schema.Types.ObjectId;
   customFields: [];
+  type: "item";
 }
 
 const ItemSchema = new mongoose.Schema<IItem>({
@@ -32,6 +33,10 @@ const ItemSchema = new mongoose.Schema<IItem>({
   itemCollection: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+  },
+  type: {
+    type: String,
+    default: "item",
   },
   customFields: [],
 });
