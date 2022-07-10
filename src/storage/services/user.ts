@@ -31,7 +31,7 @@ export class UserService implements UserRepo {
         throw new AppError(404, "User not found!");
       }
 
-      return user;
+      return user.toObject();
     } catch (error) {
       throw error;
     }
