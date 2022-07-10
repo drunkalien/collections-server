@@ -108,7 +108,7 @@ export class CollectionService implements CollectionRepo {
 
   async getCollectionItems(collectionId: string): Promise<IItem[]> {
     try {
-      const items = await Item.find({ collection: collectionId });
+      const items = await Item.find({ itemCollection: collectionId });
 
       return items;
     } catch (error) {
