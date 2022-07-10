@@ -23,6 +23,22 @@ export class UserController {
     }
   }
 
+  async findById(req: Request, res: Response) {
+    try {
+      const user = await service.user.findById(req.params.id);
+
+      res.status(200).json({
+        success: true,
+        ...user,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
+
   async create(req: Request, res: Response) {
     try {
       let file64;
