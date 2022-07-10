@@ -121,18 +121,24 @@ export class ItemService implements ItemRepo {
         throw new AppError(404, "Item not found!");
       }
 
-      if (!item.likedBy.includes(userId)) {
-        item.likedBy.push(userId);
-        item.numberOfLikes++;
-        await item.save();
+      if (!item.likedBy.includes(userId.toString())) {
+        await Item.findOneAndUpdate(
+          {
+            _id: id,
+          },
+          {
+            numberOfLikes: item.numberOfLikes + 1,
+            likedBy: [...item.likedBy, userId],
+          }
+        );
       } else {
-        item.numberOfLikes--;
         await Item.findOneAndUpdate(
           { _id: id },
           {
             $pull: {
               likedBy: userId,
             },
+            numberOfLikes: item.numberOfLikes - 1,
           }
         );
         await item.save();
