@@ -17,7 +17,7 @@ export class CommentService implements CommentRepo {
         body: payload.body,
       });
 
-      return comment;
+      return (await comment.populate("author")).toObject();
     } catch (error) {
       throw error;
     }
