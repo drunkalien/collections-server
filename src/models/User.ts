@@ -11,7 +11,7 @@ export interface IUser extends Document {
   collections: Schema.Types.ObjectId[];
   isBlocked: boolean;
   role: RoleType;
-  type: "user";
+  docType: "user";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -52,7 +52,7 @@ const UserSchema = new Schema<IUser>(
       required: true,
       default: false,
     },
-    type: {
+    docType: {
       type: String,
       default: "user",
     },

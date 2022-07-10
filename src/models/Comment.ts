@@ -4,7 +4,7 @@ export interface IComment extends Document {
   author: mongoose.Schema.Types.ObjectId;
   commentedTo: mongoose.Schema.Types.ObjectId;
   body: string;
-  type: "comment";
+  docType: "comment";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,7 +24,7 @@ const CommentSchema = new mongoose.Schema<IComment>(
       type: String,
       required: true,
     },
-    type: {
+    docType: {
       type: String,
       default: "comment",
     },
