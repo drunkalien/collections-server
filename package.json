@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "installDeps": "npm install",
-    "start": "node src/server.ts"
+    "compile": "tsc",
+    "start": "node dist/src/server.ts"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
