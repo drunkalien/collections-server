@@ -6,7 +6,7 @@
   "scripts": {
     "installDeps": "npm install",
     "compile": "tsc",
-    "start": "node dist/src/server.ts"
+    "start": "node dist/src/server.js"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
