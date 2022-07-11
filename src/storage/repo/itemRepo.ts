@@ -15,4 +15,5 @@ export interface ItemRepo {
   delete(userId: string, role: RoleType, id: string): Promise<void>;
   likeUnlike(userId: Schema.Types.ObjectId, id: string): Promise<void>;
   getItemCommetns(id: string): Promise<IComment[]>;
+  latestItems(): Promise<IItem[]>;
 }

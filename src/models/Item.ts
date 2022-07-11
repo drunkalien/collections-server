@@ -10,36 +10,39 @@ export interface IItem extends Document {
   docType: "item";
 }
 
-const ItemSchema = new mongoose.Schema<IItem>({
-  name: {
-    type: String,
-    required: true,
-  },
-  tags: [
-    {
+const ItemSchema = new mongoose.Schema<IItem>(
+  {
+    name: {
       type: String,
-      default: [],
+      required: true,
     },
-  ],
-  numberOfLikes: {
-    type: Number,
-    default: 0,
-  },
-  likedBy: [
-    {
+    tags: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
+    numberOfLikes: {
+      type: Number,
+      default: 0,
+    },
+    likedBy: [
+      {
+        type: String,
+      },
+    ],
+    itemCollection: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    docType: {
       type: String,
+      default: "item",
     },
-  ],
-  itemCollection: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    customFields: [],
   },
-  docType: {
-    type: String,
-    default: "item",
-  },
-  customFields: [],
-});
+  { timestamps: true }
+);
 
 ItemSchema.index({ "$**": "text" });
 

@@ -13,4 +13,5 @@ export interface CollectionRepo {
   delete(userId: string, role: RoleType, collectionId: string): Promise<void>;
   getCollection(id: string): Promise<ICollection | null>;
   getCollectionItems(collectionId: string): Promise<IItem[]>;
+  largestCollections(): Promise<ICollection[]>;
 }

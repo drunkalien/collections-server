@@ -120,4 +120,20 @@ export class CollectionController {
       });
     }
   }
+
+  async largestCollections(req: Request, res: Response) {
+    try {
+      const collections = await service.collection.largestCollections();
+
+      res.json({
+        success: true,
+        collections,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
 }

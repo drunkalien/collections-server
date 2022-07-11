@@ -115,4 +115,20 @@ export class ItemController {
       });
     }
   }
+
+  async latestItems(req: Request, res: Response) {
+    try {
+      const items = await service.item.latestItems();
+
+      res.json({
+        success: true,
+        items,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        error,
+      });
+    }
+  }
 }

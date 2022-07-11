@@ -14,5 +14,6 @@ router
   .get(controller.getCollection)
   .delete(auth, controller.deleteCollection);
 router.route("/:id/items").get(controller.getCollectionItems);
+router.route("/get/largest").get(controller.largestCollections);
 
 export default router;

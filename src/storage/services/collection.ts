@@ -115,4 +115,16 @@ export class CollectionService implements CollectionRepo {
       throw error;
     }
   }
+
+  async largestCollections(): Promise<ICollection[]> {
+    try {
+      const collections = await Collection.find()
+        .sort({ numberOfItems: -1 })
+        .limit(5);
+
+      return collections;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

@@ -14,6 +14,7 @@ router
   .get(controller.get)
   .delete(auth, controller.delete);
 router.route("/like-unlike/:id").post(auth, controller.likeUnlike);
-router.route("/:id/comments").get(auth, controller.getItemComments);
+router.route("/:id/comments").get(controller.getItemComments);
+router.route("/get/latest").get(controller.latestItems);
 
 export default router;

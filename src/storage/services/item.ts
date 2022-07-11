@@ -157,4 +157,14 @@ export class ItemService implements ItemRepo {
       throw error;
     }
   }
+
+  async latestItems(): Promise<IItem[]> {
+    try {
+      const items = await Item.find().sort({ createdAt: -1 }).limit(5);
+
+      return items;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
