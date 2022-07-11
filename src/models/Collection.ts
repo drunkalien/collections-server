@@ -11,29 +11,38 @@ export interface ICollection extends Document {
   numberOfItems: number;
 }
 
-const CollectionSchema = new mongoose.Schema<ICollection>({
-  name: {
-    type: String,
-    required: true,
+const CollectionSchema = new mongoose.Schema<ICollection>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    description: String,
+    tags: [],
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    image: String,
+    docType: { type: String, default: "collection" },
+    numberOfItems: {
+      type: Number,
+      default: 0,
+    },
+    customFields: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CustomFields",
+    },
   },
-  description: String,
-  tags: [],
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  image: String,
-  docType: { type: String, default: "collection" },
-  numberOfItems: {
-    type: Number,
-    default: 0,
-  },
-  customFields: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "CustomFields",
-  },
-});
+  {
+    writeConcern: {
+      w: "majority",
+      j: true,
+      wtimeout: 1000,
+    },
+  }
+);
 
 CollectionSchema.index({ "$**": "text" });
 

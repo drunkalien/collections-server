@@ -41,7 +41,14 @@ const ItemSchema = new mongoose.Schema<IItem>(
     },
     customFields: [],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    writeConcern: {
+      w: "majority",
+      j: true,
+      wtimeout: 1000,
+    },
+  }
 );
 
 ItemSchema.index({ "$**": "text" });

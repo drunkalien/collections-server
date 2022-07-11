@@ -29,7 +29,14 @@ const CommentSchema = new mongoose.Schema<IComment>(
       default: "comment",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    writeConcern: {
+      w: "majority",
+      j: true,
+      wtimeout: 1000,
+    },
+  }
 );
 
 CommentSchema.index({ "$**": "text" });

@@ -5,13 +5,22 @@ export interface ICustomFields extends Document {
   parent: mongoose.Schema.Types.ObjectId;
 }
 
-const CustomFieldsSchema = new mongoose.Schema<ICustomFields>({
-  customFields: [],
-  parent: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Collection",
+const CustomFieldsSchema = new mongoose.Schema<ICustomFields>(
+  {
+    customFields: [],
+    parent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Collection",
+    },
   },
-});
+  {
+    writeConcern: {
+      w: "majority",
+      j: true,
+      wtimeout: 1000,
+    },
+  }
+);
 
 const CustomFields = mongoose.model<ICustomFields>(
   "CustomFields",

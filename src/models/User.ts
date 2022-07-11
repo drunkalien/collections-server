@@ -57,7 +57,14 @@ const UserSchema = new Schema<IUser>(
       default: "user",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    writeConcern: {
+      w: "majority",
+      j: true,
+      wtimeout: 1000,
+    },
+  }
 );
 
 UserSchema.pre("save", async function (next) {
