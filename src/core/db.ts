@@ -12,7 +12,7 @@ db.once("open", () => {
 });
 
 export default class Database {
-  private url = `mongodb://localhost:${config.MongoPort}/${config.MongoDatabase}`;
+  url = `mongodb+srv://drunkalien:j20011703b@cluster0.vqedw.mongodb.net/?retryWrites=true&w=majority/${config.MongoDatabase}`;
 
   connect() {
     return mongoose.connect(this.url, {}, (error) => {
